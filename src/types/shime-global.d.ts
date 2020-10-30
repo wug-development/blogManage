@@ -8,6 +8,7 @@ declare var document: Document;
 declare module "vue/types/vue" {
     interface Vue {
         $http: Axios.AxiosFun
+        api: String
         loadEvent?: Vue
         sendEvent?: Vue
         broadEvent?: Vue

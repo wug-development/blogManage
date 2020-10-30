@@ -2,6 +2,27 @@ const path = require("path");
 const sourceMap = process.env.NODE_ENV === "development";
 
 module.exports = {
+    devServer: {
+        open: true,
+        host: "localhost",
+        port: 8080, //8080,
+        https: false,
+        hotOnly: false,
+        // proxy: "http://192.168.11.69:3001",
+        proxy: {
+            // 设置代理
+            // proxy all requests starting with /api to jsonplaceholder
+            "/api": {
+                target: "http://192.168.11.69:3001",
+                changeOrigin: true,
+                // ws: true,
+                pathRewrite: {
+                    "^/api": ""
+                }
+            }
+        },
+        before: app => { }
+    },
     // 基本路径
     publicPath: "",
     // 输出文件目录
@@ -51,26 +72,6 @@ module.exports = {
     // // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
     // pwa: {},
     // webpack-dev-server 相关配置
-    devServer: {
-        open: true,
-        host: "localhost",
-        port: 8080, //8080,
-        https: false,
-        hotOnly: false,
-        proxy: {
-            // 设置代理
-            // proxy all requests starting with /api to jsonplaceholder
-            "/api": {
-                target: "http://192.168.11.69:3001",
-                changeOrigin: true,
-                // ws: true,
-                pathRewrite: {
-                    "^/api": ""
-                }
-            }
-        },
-        before: app => { }
-    },
     // 第三方插件配置
     pluginOptions: {
         // ...
