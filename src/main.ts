@@ -6,7 +6,7 @@ import service from "./utils/request"
 import VueAxios from 'vue-axios'
 // import devproxy from '../vue.config'
 
-import { Layout, Menu, Icon, Badge, Dropdown, message } from 'ant-design-vue'
+import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 
 Vue.config.productionTip = false
@@ -22,15 +22,9 @@ Vue.component(Layout.Footer.name, Layout.Footer)
 Vue.component(Icon.name, Icon)
 Vue.component(Badge.name, Badge)
 Vue.component(Dropdown.name, Dropdown)
+Vue.component(Breadcrumb.name, Breadcrumb)
+Vue.component(Breadcrumb.Item.name, Breadcrumb.Item)
 
-// declare module 'vue/types/vue' {
-//     interface Vue {
-//         $http: string,
-//         api: string
-//     } 
-// }
-
-// Vue.prototype.$http = service
 Vue.prototype.api = '/api'
 
 new Vue({

@@ -44,7 +44,7 @@ export default class Layout extends Vue {
                             path: '/'
                         })
                     } else {
-                        this.$message.error("账号密码错误！")
+                        this.$message.error("账号或密码错误！")
                     }
                 } else {
                     this.$message.error("请求失败！")

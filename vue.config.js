@@ -3,9 +3,9 @@ const sourceMap = process.env.NODE_ENV === "development";
 
 module.exports = {
     devServer: {
-        open: true,
-        host: "localhost",
-        port: 8080, //8080,
+        open: false,
+        host: "192.168.11.69",
+        port: 8088, //8080,
         https: false,
         hotOnly: false,
         // proxy: "http://192.168.11.69:3001",
