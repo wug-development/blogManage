@@ -1,6 +1,6 @@
 <template>
 	<a-layout id="components-layout-demo-custom-trigger">
-		<MyMenu :collapsed="menucoll"></MyMenu>
+		<my-menu :collapsed="menucoll"></my-menu>
 		<a-layout>
 			<MyHeader :collapsed="menucoll" v-on:changemenu="showMenu"></MyHeader>
 			<a-layout-content class="layout-content">
@@ -22,12 +22,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import MyHeader from '../components/MyHeader.vue';
-import MyMenu from '../components/MyMenu.vue';
 
 @Component({
 	components: {
-		MyHeader,
-		MyMenu
+		MyHeader
 	}
 })
 export default class Layout extends Vue {

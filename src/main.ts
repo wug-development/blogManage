@@ -9,6 +9,10 @@ import VueAxios from 'vue-axios'
 import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 
+import MyMenu from './components/my_menu'
+
+Vue.use(MyMenu)
+
 Vue.config.productionTip = false
 Vue.use(VueAxios, service)
 Vue.use(Menu)
