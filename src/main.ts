@@ -6,7 +6,7 @@ import service from "./utils/request"
 import VueAxios from 'vue-axios'
 // import devproxy from '../vue.config'
 
-import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb } from 'ant-design-vue'
+import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb, Card } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 
 import MyMenu from './components/my_menu'
@@ -28,6 +28,7 @@ Vue.component(Badge.name, Badge)
 Vue.component(Dropdown.name, Dropdown)
 Vue.component(Breadcrumb.name, Breadcrumb)
 Vue.component(Breadcrumb.Item.name, Breadcrumb.Item)
+Vue.component(Card.name, Card)
 
 Vue.prototype.api = '/api'
 

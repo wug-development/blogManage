@@ -6,13 +6,19 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
     {
         path: '/',
-        name: '首页',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Layout.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Layout.vue'),
+        children: [
+            {
+                path: '/',
+                name: '首页',
+                component: () => import('../views/Index.vue')
+            }
+        ]
     },
     {
         path: '/login',
         name: '登录',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+        component: () => import('../views/Login.vue')
     }
 ]
 

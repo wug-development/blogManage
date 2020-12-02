@@ -31,15 +31,15 @@ export default class Layout extends Vue {
         } else if (this.upass.length < 1) {
             this.$message.warning("请输入密码！")
         } else {
-            this.$http.get(this.api + '/account/login', {params: {
+            this.$http.get('/account/login', {params: {
                 uname: this.uname,
                 upass: this.upass
             }}).then((res) => {
                 console.log(res.data)
                 if (res.data.code === 200) {
-                    const _uid = res.data.data
-                    if (_uid) {
-                        sessionStorage.setItem('mblog', _uid)
+                    const token = res.data.data
+                    if (token) {
+                        localStorage.setItem('blogToken', token)
                         this.$router.push({
                             path: '/'
                         })

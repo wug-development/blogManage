@@ -6,7 +6,7 @@
 			<a-layout-content class="layout-content">
 				<template v-if="$store.state.setBreadCrumb.length > 1">
 					<a-breadcrumb>
-						<a-breadcrumb-item v-for="(item, i) in $store.state.setBreadCrumb">
+						<a-breadcrumb-item v-for="(item, i) in $store.state.setBreadCrumb" :key="i">
 							<router-link :to="item.path">{{item.name}}</router-link>
 						</a-breadcrumb-item>
 					</a-breadcrumb>
@@ -53,6 +53,14 @@ export default class Layout extends Vue {
 #components-layout-demo-custom-trigger{
 	height: 100%;
 	overflow: hidden;
+	.ant-layout{
+		height: 100%;
+		position: relative;
+		.ant-layout-content{
+			height: 100%;
+			padding-top: 64px;
+		}
+	}
 	.trigger {
 		font-size: 18px;
 		line-height: 64px;
@@ -62,12 +70,6 @@ export default class Layout extends Vue {
 	}
 	.trigger:hover {
 		color: #1890ff;
-	}
-	.layout-content{
-		margin: '24px 16px';
-		padding: '24px';
-		background: '#fff';
-		min-height: '280px';
 	}
 }
 </style>

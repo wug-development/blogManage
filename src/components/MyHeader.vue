@@ -34,10 +34,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Layout extends Vue {
     @Prop() private collapsed!: string;
+    
 
     changeMenu() {
         this.$emit('changemenu', !this.collapsed)
     }
+
 
     loginOut () {
         sessionStorage.removeItem('mblog')
@@ -54,6 +56,12 @@ export default class Layout extends Vue {
     padding: 0;
     display: flex;
     justify-content: space-between;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    box-shadow: 1px 0 0 0 #f0f0f0, 0 1px 0 0 #e1e1e1, 1px 1px 0 0 #f0f0f0;
     .header-right{
         display: flex;
         padding-right: 20px;
