@@ -4,9 +4,12 @@ import router from './router'
 import store from './store'
 import service from "./utils/request"
 import VueAxios from 'vue-axios'
+import Uris from './utils/urls'
+import Common from './utils/common'
+import FnExtends from './utils/fn-extend.js'
 // import devproxy from '../vue.config'
 
-import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb, Card } from 'ant-design-vue'
+import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb, Card, Button, Select, Upload } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 
 import MyMenu from './components/my_menu'
@@ -29,11 +32,21 @@ Vue.component(Dropdown.name, Dropdown)
 Vue.component(Breadcrumb.name, Breadcrumb)
 Vue.component(Breadcrumb.Item.name, Breadcrumb.Item)
 Vue.component(Card.name, Card)
+Vue.component(Button.name, Button)
+Vue.component(Select.name, Select)
+Vue.component(Select.Option.name, Select.Option)
+Vue.component(Upload.name, Upload)
 
 Vue.prototype.api = '/api'
+Vue.prototype.uris = Uris
+Vue.prototype._ = Common
+
+//扩展原生方法
+FnExtends()
 
 new Vue({
     router,
     store,
     render: h => h(App)
 }).$mount('#app')
+

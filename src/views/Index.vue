@@ -175,7 +175,11 @@
                         <div class="ranking-body">
                             <div class="ranking-title">访问量排名</div>
                             <ul>
-                                <li>1</li>
+                                <li>a</li>
+                                <li>b</li>
+                                <li>b</li>
+                                <li>g</li>
+                                <li>d</li>
                             </ul>
                         </div>
                     </div>
@@ -224,27 +228,12 @@ export default class Index extends Vue {
     }
 
     created () {
-        this.$http.get('/account/userinfo', {params: {}}).then((res) => {
-            console.log(res.data)
-            // if (res.data.code === 200) {
-            //     const token = res.data.data
-            //     if (token) {
-            //         localStorage.setItem('token', token)
-            //         this.$router.push({
-            //             path: '/'
-            //         })
-            //     } else {
-            //         this.$message.error("账号或密码错误！")
-            //     }
-            // } else {
-            //     this.$message.error("请求失败！")
-            // }
-        })
     }
 }
 </script>
 
 <style lang="scss">
+@import '@/assets/sass/base.scss';
 .index-box{
     height: 100%;
     overflow-x: hidden;
@@ -252,19 +241,9 @@ export default class Index extends Vue {
     box-sizing: border-box;
     font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
     .index-head{
-        background-color: #fff;
-        padding: 16px 24px;
-        border-top: 1px solid #f1f1f1;
+        @include wg-header;
         .index-head-title{
-            margin-right: 12px;
-            margin-bottom: 0;
-            color: rgba(0,0,0,.85);
-            font-weight: 600;
-            font-size: 20px;
-            line-height: 32px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            @include wg-title;
         }
         .index-head-box{
             display: flex;
@@ -441,6 +420,11 @@ export default class Index extends Vue {
             box-sizing: border-box;
             li{
                 padding: 16px 0;
+                counter-increment: a 1;
+                // counter-reset: a 10;
+            }
+            li:before{
+                content: counter(a);
             }
         }
     }

@@ -1,0 +1,17 @@
+@mixin wg-header {
+    background-color: #fff;
+    padding: 16px 24px;
+    border-top: 1px solid #f1f1f1;
+    box-shadow: 0 2px 4px rgba(0,0,0,.06);
+}
+@mixin wg-title {
+    margin-right: 12px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,.85);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

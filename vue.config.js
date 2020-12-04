@@ -4,7 +4,7 @@ const sourceMap = process.env.NODE_ENV === "development";
 module.exports = {
     devServer: {
         open: false,
-        host: "192.168.11.69",
+        host: "192.168.11.52",
         port: 8088, //8080,
         https: false,
         hotOnly: false,
@@ -13,7 +13,7 @@ module.exports = {
             // 设置代理
             // proxy all requests starting with /api to jsonplaceholder
             "/api": {
-                target: "http://192.168.11.69:3001",
+                target: "http://192.168.11.52:3001",
                 changeOrigin: true,
                 // ws: true,
                 pathRewrite: {

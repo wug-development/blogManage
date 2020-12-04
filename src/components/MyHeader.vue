@@ -11,8 +11,8 @@
             </div>
             <a-dropdown class="header-dropdow">
                 <div class="header-name-img ant-dropdown-link">
-                    <span class="hn-img"><img src="../assets/images/head.png" alt=""></span>
-                    <span>Guang Wu</span>
+                    <span class="hn-img headimg"><img v-if="headImg" :src="headImg" alt=""></span>
+                    <span>{{accountName}}</span>
                 </div>
                 <a-menu slot="overlay">
                     <a-menu-item>
@@ -29,17 +29,48 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Provide, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Layout extends Vue {
     @Prop() private collapsed!: string;
-    
+    @Provide() accountName: string = ''
+    @Provide() headImg: string = ''
 
     changeMenu() {
         this.$emit('changemenu', !this.collapsed)
     }
 
+    getUserInfo () {
+        this.$http.get(this.uris.userinfo, {params: {}}).then((res: any) => {
+            console.log(res.data)
+            if (res.data.code === 200) {
+                const d = res.data.data
+                this.accountName = d.name
+                if (d.headimg) {
+                    this.headImg = d.headimg
+                }
+                sessionStorage.setItem('userinfo', JSON.stringify(d))
+            } else {
+                this.$message.error("请求失败！")
+            }
+        })
+    }
+
+    created () {
+        let u = sessionStorage.getItem('userinfo')
+        if (u) {
+            let h = JSON.parse(u)
+            if (typeof h === 'object' && h !== null) {
+                this.accountName = h.name
+                if (h.headimg) {
+                    this.headImg = h.headimg
+                }
+            }
+        } else {
+            this.getUserInfo()
+        }
+    }
 
     loginOut () {
         sessionStorage.removeItem('mblog')

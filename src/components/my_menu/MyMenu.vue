@@ -1,6 +1,6 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
-        <div class="logo"></div>
+        <div class="logo" @click="toPage('')"></div>
         <a-menu
         :default-selected-keys="['1']"
         :default-open-keys="['sub1']"
@@ -8,11 +8,11 @@
         theme="dark"
         :inline-collapsed="collapsed"
         >
-            <a-menu-item key="1">
+            <a-menu-item key="1" @click="toPage('marticle')">
                 <a-icon type="pic-right" />
                 <span>文章管理</span>
             </a-menu-item>
-            <a-menu-item key="2">
+            <a-menu-item key="2" @click="toPage('mproject')">
                 <a-icon type="pic-center" />
                 <span>项目管理</span>
             </a-menu-item>
@@ -44,6 +44,12 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Layout extends Vue {
     @Prop() private collapsed!: string;
+
+    toPage (v: string) {
+        this.$router.push({
+            path: '/' + v
+        })
+    }
 }
 </script>
 
@@ -56,6 +62,7 @@ export default class Layout extends Vue {
     background: url('~@/assets/images/blog-logo.png') no-repeat center;
     background-position-y: 2px;
     background-size: 112px auto;
+    cursor: pointer;
 }
 .ant-layout-sider-collapsed{
     .logo{

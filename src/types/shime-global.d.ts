@@ -9,6 +9,8 @@ declare module "vue/types/vue" {
     interface Vue {
         $http: Axios.AxiosFun
         api: String
+        uris: URIS.URIS
+        _: Common._
         loadEvent?: Vue
         sendEvent?: Vue
         broadEvent?: Vue

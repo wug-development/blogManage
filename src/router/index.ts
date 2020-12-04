@@ -12,6 +12,21 @@ const routes: Array<RouteConfig> = [
                 path: '/',
                 name: '首页',
                 component: () => import('../views/Index.vue')
+            },
+            {
+                path: '/mproject',
+                name: '项目管理',
+                component: () => import('../views/MProject.vue')
+            },
+            {
+                path: '/editproject',
+                name: '编辑项目',
+                component: () => import('../views/ProjectEdit.vue')
+            },
+            {
+                path: '/marticle',
+                name: '文章管理',
+                component: () => import('../views/MArticle.vue')
             }
         ]
     },
