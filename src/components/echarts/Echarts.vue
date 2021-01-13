@@ -42,10 +42,9 @@ function initEchart (el: any) {
         dataShadow.push(yMax);
     }
     let m = (new Date()).getMonth() + 1
-    for (let d = 12; d > 0; d--) {
-        let _m = m - d
-        if (_m < 1) _m = 12 - _m
-        dataAxis.push(_m + '月')
+    for (let i = 0; i < 12; i++) {
+        let _m = m > i ? m - i : m - i + 12
+        dataAxis.push((_m || 12) + '月')
     }
     let options = {
         title: {
@@ -53,7 +52,7 @@ function initEchart (el: any) {
             subtext: 'Feature Sample: Gradient Color, Shadow, Click Zoom'
         },
         xAxis: {
-            data: dataAxis,
+            data: dataAxis.reverse(),
             type: 'category',
             axisLabel: {
                 inside: false,

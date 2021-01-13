@@ -1,54 +1,92 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
         <div class="logo" @click="toPage('')"></div>
-        <a-menu
-        :default-selected-keys="['1']"
-        :default-open-keys="['sub1']"
-        mode="inline"
-        theme="dark"
-        :inline-collapsed="collapsed"
-        >
-            <a-menu-item key="1" @click="toPage('marticle')">
-                <a-icon type="pic-right" />
-                <span>文章管理</span>
-            </a-menu-item>
-            <a-menu-item key="2" @click="toPage('mproject')">
-                <a-icon type="pic-center" />
-                <span>项目管理</span>
-            </a-menu-item>
-            <a-menu-item key="3">
-                <a-icon type="apartment" />
-                <span>类别管理</span>
-            </a-menu-item>
-            <a-menu-item key="4">
-                <a-icon type="book" />
-                <span>标签管理</span>
-            </a-menu-item>
-            <a-menu-item key="5">
-                <a-icon type="message" />
-                <span>留言管理</span>
-            </a-menu-item>
-            <a-sub-menu key="sub1">
-                <span slot="title"><a-icon type="build" /><span>其它</span></span>
-                <a-menu-item key="6">
-                设置
-                </a-menu-item>
-            </a-sub-menu>
+        <a-menu :default-selected-keys="defaultKey" :default-open-keys="['sub1']" mode="inline" theme="dark" :inline-collapsed="collapsed">
+            <template v-for="(item, i) in menuList">
+                <template v-if="item.children">
+                    <a-sub-menu :key="item.key">
+                        <span slot="title"><a-icon :type="item.icon" /><span>{{item.name}}</span></span>
+                        <a-menu-item v-for="(sub, j) in item.children" :key="sub.key">{{sub.name}}</a-menu-item>
+                    </a-sub-menu>
+                </template>
+                <template v-else>
+                    <a-menu-item :key="item.key" @click="toPage(item.path)">
+                        <a-icon :type="item.icon" />
+                        <span>{{item.name}}</span>
+                    </a-menu-item>
+                </template>
+            </template>
         </a-menu>
     </a-layout-sider>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-
+import { Component, Prop, Vue, Provide } from 'vue-property-decorator';
 @Component
 export default class Layout extends Vue {
-    @Prop() private collapsed!: string;
+    @Prop() private collapsed: boolean = false;
+    @Provide() defaultKey: any = [];
+    @Provide() menuList: any;
 
     toPage (v: string) {
-        this.$router.push({
-            path: '/' + v
-        })
+        let path = this.$route
+        if (path.path.slice(1) !== v) {
+            this.$router.push({
+                path: '/' + v
+            })
+        }
+    }
+
+    beforeMount () {
+        let path = this.$route
+        if (path.matched.length > 1) {
+            let obj = this.menuList.find((e: any) => {
+                return e.name === path.name
+            })
+            if (obj) {
+                this.defaultKey = [obj.key]
+            }
+        }
+    }
+
+    created () {
+        this.menuList = [{
+            name: '文章管理',
+            key: '1',
+            icon: 'pic-right',
+            path: 'marticle'
+        }, {
+            name: '项目管理',
+            key: '2',
+            icon: 'pic-center',
+            path: 'mproject'
+        }, {
+            name: '类型管理',
+            key: '3',
+            icon: 'apartment',
+            path: ''
+        }, {
+            name: '标签管理',
+            key: '4',
+            icon: 'book',
+            path: ''
+        }, {
+            name: '留言管理',
+            key: '5',
+            icon: 'message',
+            path: ''
+        }, {
+            name: '其它',
+            key: '6',
+            icon: 'build',
+            path: '',
+            children: [{
+                name: '设置',
+                key: '6-1',
+                icon: '',
+                path: '',
+            }]
+        }]
     }
 }
 </script>
@@ -60,7 +98,7 @@ export default class Layout extends Vue {
     text-align: center;
 	margin: 16px;
     background: url('~@/assets/images/blog-logo.png') no-repeat center;
-    background-position-y: 2px;
+    background-position-y: 4px;
     background-size: 112px auto;
     cursor: pointer;
 }

@@ -9,7 +9,7 @@ import Common from './utils/common'
 import FnExtends from './utils/fn-extend.js'
 // import devproxy from '../vue.config'
 
-import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb, Card, Button, Select, Upload } from 'ant-design-vue'
+import { Layout, Menu, Icon, Badge, Dropdown, message, Breadcrumb, Card, Button, Select, Upload, Checkbox, Pagination } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css';
 
 import MyMenu from './components/my_menu'
@@ -36,6 +36,8 @@ Vue.component(Button.name, Button)
 Vue.component(Select.name, Select)
 Vue.component(Select.Option.name, Select.Option)
 Vue.component(Upload.name, Upload)
+Vue.component(Checkbox.name, Checkbox)
+Vue.component(Pagination.name, Pagination)
 
 Vue.prototype.api = '/api'
 Vue.prototype.uris = Uris

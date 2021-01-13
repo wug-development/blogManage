@@ -6,7 +6,7 @@
                 <div class="mph-search-box">
                     <input type="text" class="txt" placeholder="请输入项目名称" maxlength="50">
                     <div class="btn">搜索</div>
-                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit" :size="size">新增</a-button>
+                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit">新增</a-button>
                 </div>
             </div>
         </div>
