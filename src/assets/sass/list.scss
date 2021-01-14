@@ -1,0 +1,45 @@
+@import '@/assets/sass/base.scss';
+.m-list-body{
+    height: 100%;
+    padding: 158px 20px 20px 20px;
+    .m-list-table-wrapper{
+        height: 100%;
+        background-color: #fff;
+        border-radius: 2px;
+        padding: 20px;
+        .m-list-table{
+            width: 100%;
+            text-align: center;
+            thead{
+                font-weight: bold;
+            }
+            tr{
+                border-bottom: 1px solid #eee;
+                td{
+                    padding: 15px 0;
+                    &:first-child{
+                        width: 20px;   
+                    }
+                    &:nth-child(2){
+                        text-align: left;
+                        padding-left: 1%;
+                    }
+                    a{
+                        color: $color;
+                    }
+                    .btn{
+                        border: 0;
+                        margin: 0 5px;
+                        height: 24px;
+                        line-height: 24px;
+                        width: 60px;
+                    }
+                }
+            }
+        }
+        .m-list-table-page{
+            padding: 30px 0 15px 0;
+            text-align: right;
+        }
+    }
+}

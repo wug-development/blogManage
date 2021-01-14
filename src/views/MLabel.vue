@@ -1,12 +1,12 @@
 <template>
-    <div class="marticle-box">
+    <div class="mlabel-box">
         <div class="m-list-header">
-            <div class="m-list-title">文章管理</div>
+            <div class="m-list-title">标签管理</div>
             <div class="m-list-search-body">
                 <div class="m-list-search-box">
-                    <input type="text" class="txt" placeholder="请输入文章名称" maxlength="50">
+                    <input type="text" class="txt" placeholder="请输入标签名称" maxlength="50">
                     <a-button type="primary" class="btn" :loading="searching" @click="search">搜索</a-button>
-                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit">新增</a-button>
+                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit('')">新增</a-button>
                 </div>
             </div>
         </div>
@@ -17,9 +17,8 @@
                     <thead>
                         <tr>
                             <td></td>
-                            <td>文章标题</td>
+                            <td>标签名称</td>
                             <td>添加时间</td>
-                            <td>阅读量</td>
                             <td>操作</td>
                         </tr>
                     </thead>
@@ -28,11 +27,10 @@
                             <td>
                                 <a-checkbox></a-checkbox>
                             </td>
-                            <td><a href="">TradeCode 99</a></td>
+                            <td><a href="">TradeCode {{i}}</a></td>
                             <td>2021-01-11 18:16:47</td>
-                            <td>76</td>
                             <td>
-                                <button class="btn btn-edit">编辑</button>
+                                <button class="btn btn-edit" @click="toEdit(i)">编辑</button>
                                 <button class="btn btn-del">删除</button>
                             </td>
                         </tr>
@@ -43,18 +41,31 @@
                 </div>
             </div>
         </div>
+
+        <my-modal v-model="isShow" :title="layerTitle" :loading="loading" @submit="save">
+            <a-input placeholder="请输入标签名称" v-model="labelName" />
+        </my-modal>
     </div>
 </template>
 
 <script lang="ts">
 import {Vue, Component, Provide} from 'vue-property-decorator'
+import MyModal from '@/components/ModalLayer.vue'
 
-@Component
-export default class MArticle extends Vue{
+@Component({
+    components: {
+        'my-modal': MyModal
+    }
+})
+export default class MLabel extends Vue{
     @Provide() searching: boolean = false
     @Provide() list: any
     @Provide() height: any = 0
     @Provide() pageNum: number = 0
+    @Provide() isShow: boolean = false
+    @Provide() loading: boolean = false
+    @Provide() labelName: string = ''
+    @Provide() layerTitle: string = ''
 
     search () {
         this.searching = true
@@ -62,10 +73,18 @@ export default class MArticle extends Vue{
             this.searching =false
         }, 3000)
     }
-    toEdit (v: string) {
-        this.$router.push({
-            path: '/editarticle' + (v? `?flag=${v}` : '')
-        })
+    toEdit (v: any) {
+        console.log(v)
+        if (v) {
+            this.labelName = v
+            this.layerTitle = '编辑标签'
+        } else {
+            this.layerTitle = '添加标签'
+        }
+        this.isShow = true
+    }
+    save () {
+
     }
 
     created () {
@@ -80,7 +99,7 @@ export default class MArticle extends Vue{
 <style lang="scss">
 @import '@/assets/sass/list.scss';
 @import '@/assets/sass/list-header.scss';
-.marticle-box{
+.mlabel-box{
     height: 100%;
     overflow: hidden;
     position: relative;

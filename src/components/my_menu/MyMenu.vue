@@ -1,7 +1,7 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
         <div class="logo" @click="toPage('')"></div>
-        <a-menu :default-selected-keys="defaultKey" :default-open-keys="['sub1']" mode="inline" theme="dark" :inline-collapsed="collapsed">
+        <a-menu :default-selected-keys="defaultSelKey" :default-open-keys="defaultOpenKey" mode="inline" theme="dark" :inline-collapsed="collapsed">
             <template v-for="(item, i) in menuList">
                 <template v-if="item.children">
                     <a-sub-menu :key="item.key">
@@ -25,7 +25,8 @@ import { Component, Prop, Vue, Provide } from 'vue-property-decorator';
 @Component
 export default class Layout extends Vue {
     @Prop() private collapsed: boolean = false;
-    @Provide() defaultKey: any = [];
+    @Provide() defaultSelKey: any = [];
+    @Provide() defaultOpenKey: any = [];
     @Provide() menuList: any;
 
     toPage (v: string) {
@@ -40,12 +41,7 @@ export default class Layout extends Vue {
     beforeMount () {
         let path = this.$route
         if (path.matched.length > 1) {
-            let obj = this.menuList.find((e: any) => {
-                return e.name === path.name
-            })
-            if (obj) {
-                this.defaultKey = [obj.key]
-            }
+            this.defaultSelKey = [path.meta.key]
         }
     }
 
@@ -64,17 +60,17 @@ export default class Layout extends Vue {
             name: '类型管理',
             key: '3',
             icon: 'apartment',
-            path: ''
+            path: 'mtype'
         }, {
             name: '标签管理',
             key: '4',
             icon: 'book',
-            path: ''
+            path: 'mlabel'
         }, {
             name: '留言管理',
             key: '5',
             icon: 'message',
-            path: ''
+            path: 'mcomment'
         }, {
             name: '其它',
             key: '6',
@@ -84,7 +80,7 @@ export default class Layout extends Vue {
                 name: '设置',
                 key: '6-1',
                 icon: '',
-                path: '',
+                path: 'set',
             }]
         }]
     }

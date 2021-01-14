@@ -1,0 +1,41 @@
+.mcard-list{
+    height: 100%;
+    padding: 12px 12px 0 12px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    li{
+        width: 25%;
+        padding: 12px;
+        cursor: pointer;
+        .mcard-item-body{
+            width: 100%;
+            background-color: #fff;
+            transition: all .3s;
+            border-radius: 4px;
+            overflow: hidden;
+            .mcard-item-content{
+                padding: 24px;
+                color: rgba(0,0,0,.85);
+                .mcard-title{
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                }
+                .mcard-other{
+                    line-height: 20px;
+                    height: 40px;
+                    margin-bottom: 8px;
+                    overflow: hidden;
+                }
+                .mcard-time{
+                    color: #808080;
+                }
+            }
+        }
+        .mcard-item-body:hover{
+            box-shadow: 0 0 10px 2px rgba(0,0,0,.15);
+        }
+    }
+}
