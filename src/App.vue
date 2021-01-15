@@ -18,5 +18,6 @@ export default class App extends Vue {
     height: 100%;
     font-size: 14px;
     overflow: hidden;
+    color: rgba(0, 0, 0, .8);
 }
 </style>

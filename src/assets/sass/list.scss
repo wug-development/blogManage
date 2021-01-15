@@ -33,6 +33,30 @@
                         height: 24px;
                         line-height: 24px;
                         width: 60px;
+                        background-color: #1890ff;
+                        color: #FFFFFF;
+                    }
+                    .btn-success{
+                        background-color: #07C160;
+                    }
+                    .btn-fail{
+                        background-color: #FA5151;
+                    }
+                    .btn-other{
+                        background-color: #FFFFFF;
+                        border: 1px solid #414141;
+                        box-sizing: border-box;
+                        line-height: 22px;
+                        color: #414141;
+                    }
+                    .text-success{
+                        color: #07C160;
+                    }
+                    .text-fail{
+                        color: #FA5151;
+                    }
+                    .text-wait{
+                        color: #FFAE3C;
                     }
                 }
             }

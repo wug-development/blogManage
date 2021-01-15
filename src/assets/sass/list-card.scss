@@ -31,6 +31,12 @@
                 }
                 .mcard-time{
                     color: #808080;
+                    span{
+                        margin-left: 15px;
+                        &:first-child{
+                            margin: 0;
+                        }
+                    }
                 }
             }
         }

@@ -4,9 +4,9 @@
 		<a-layout>
 			<MyHeader :collapsed="menucoll" v-on:changemenu="showMenu"></MyHeader>
 			<a-layout-content class="layout-content">
-				<template v-if="$store.state.setBreadCrumb.length > 1">
+				<template v-if="routerList.length > 1">
 					<a-breadcrumb>
-						<a-breadcrumb-item v-for="(item, i) in $store.state.setBreadCrumb" :key="i">
+						<a-breadcrumb-item v-for="(item, i) in routerList" :key="i">
 							<router-link :to="item.path">{{item.name}}</router-link>
 						</a-breadcrumb-item>
 					</a-breadcrumb>
@@ -20,7 +20,7 @@
 	</a-layout>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch, Provide } from 'vue-property-decorator';
 import MyHeader from '../components/MyHeader.vue';
 
 @Component({
@@ -29,7 +29,8 @@ import MyHeader from '../components/MyHeader.vue';
 	}
 })
 export default class Layout extends Vue {
-	menucoll = false
+	@Provide() menucoll: boolean = false
+	@Provide() routerList: Array<object> = []
 
 	showMenu (v: boolean): void {
 		this.menucoll = v
@@ -40,12 +41,13 @@ export default class Layout extends Vue {
 			path: '/login'
 		})
 	}
-
 	created () {
-		this.$store.state.setBreadCrumb = [{
-			name: this.$route.name,
-			path: this.$route.path
-		}]
+		this.routerList = this.$route.meta.routeList
+	}
+
+	@Watch('$route')
+	get$route (form: any, to: any): void {
+		this.routerList = this.$route.meta.routeList
 	}
 }
 </script>

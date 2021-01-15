@@ -10,6 +10,7 @@ declare module "vue/types/vue" {
         $http: Axios.AxiosFun
         api: String
         uris: URIS.URIS
+        docHeight: any
         _: Common._
         loadEvent?: Vue
         sendEvent?: Vue

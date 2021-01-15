@@ -18,7 +18,10 @@
                         <div class="mcard-item-content">
                             <div class="mcard-title">系统管理</div>
                             <div class="mcard-other">那是一种内在的东西， 他们到达不了，也无法触及的</div>
-                            <div class="mcard-time">7天前</div>
+                            <div class="mcard-time">
+                                <span>7天前</span>
+                                <span><a-icon type="message" /></span>
+                            </div>
                         </div>
                     </div>
                 </li>

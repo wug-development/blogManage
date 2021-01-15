@@ -63,6 +63,22 @@ const routes: Array<RouteConfig> = [
                     key: '3'
                 },
                 component: () => import('../views/MType.vue')
+            },
+            {
+                path: '/mcomment',
+                name: '管理留言',
+                meta: {
+                    key: ''
+                },
+                component: () => import('../views/MComment.vue'),
+            },
+            {
+                path: '/commentinfo',
+                name: '留言详情',
+                meta: {
+                    key: ''
+                },
+                component: () => import('../views/CommentInfo.vue')
             }
         ]
     },
@@ -81,9 +97,27 @@ const router = new VueRouter({
         if (saveTop) {
             return saveTop
         } else {
-            return {x: 0, y: 0}
+            return { x: 0, y: 0 }
         }
     }
+})
+let routeList: any = []
+router.beforeEach((to, from, next) => {
+    let len = routeList.length
+    // 判断路由之前是否存在，并返回位置
+    if (len > 1) {
+        let index = routeList.findIndex((r: any) => r.path === to.path)
+        if (index > -1) {
+            routeList.splice(index, len - 1)
+        } else {
+            routeList.push({ name: to.name, path: to.path })
+        }
+    } else {
+        routeList.push({ name: to.name, path: to.path })
+    }
+    console.log(routeList)
+    to.meta.routeList = routeList
+    next()
 })
 
 export default router

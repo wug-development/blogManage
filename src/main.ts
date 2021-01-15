@@ -44,6 +44,7 @@ Vue.component(Input.name, Input)
 Vue.prototype.api = '/api'
 Vue.prototype.uris = Uris
 Vue.prototype._ = Common
+Vue.prototype.docHeight = document.body.clientHeight
 
 //扩展原生方法
 FnExtends()
