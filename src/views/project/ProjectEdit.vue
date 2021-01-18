@@ -86,6 +86,7 @@ export default class ProjectEdit extends Vue {
     .projectedit-body{
         height: 100%;
         padding: 94px 24px 0 24px;
+        overflow-y: auto;
         .projectedit-form{
             background-color: #fff;
             min-height: 100px;

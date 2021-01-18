@@ -61,6 +61,14 @@ export default class Layout extends Vue {
 		.ant-layout-content{
 			height: 100%;
 			padding-top: 64px;
+			display: flex;
+			flex-direction: column;
+			.ant-breadcrumb{
+				height: 38px;
+				padding: 16px 0 0 24px;
+				background-color: #fff;
+				box-sizing: border-box;
+			}
 		}
 	}
 	.trigger {

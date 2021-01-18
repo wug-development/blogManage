@@ -6,7 +6,7 @@
                 <div class="m-list-search-box">
                     <input type="text" class="txt" placeholder="请输入项目名称" maxlength="50">
                     <div class="btn">搜索</div>
-                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit">新增</a-button>
+                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit('')">新增</a-button>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                             <div class="mcard-other">那是一种内在的东西， 他们到达不了，也无法触及的</div>
                             <div class="mcard-time">
                                 <span>7天前</span>
-                                <span><a-icon type="message" /></span>
+                                <span><a-icon type="message" @click="toMessage" /></span>
                             </div>
                         </div>
                     </div>
@@ -40,6 +40,12 @@ export default class MProject extends Vue{
     toEdit (v: string) {
         this.$router.push({
             path: '/editproject' + (v? `?flag=${v}` : '')
+        })
+    }
+
+    toMessage () {
+        this.$router.push({
+            path: '/comment'
         })
     }
 }

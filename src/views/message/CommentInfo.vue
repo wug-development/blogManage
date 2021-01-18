@@ -17,4 +17,12 @@ export default class CommentInfo extends Vue {
 
 <style lang="scss">
 @import '@/assets/sass/list-header.scss';
+.comment-info-box{
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    .m-list-header{
+        height: 64px;
+    }
+}
 </style>

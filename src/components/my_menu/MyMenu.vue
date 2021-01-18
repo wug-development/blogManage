@@ -50,12 +50,12 @@ export default class Layout extends Vue {
             name: '文章管理',
             key: '1',
             icon: 'pic-right',
-            path: 'marticle'
+            path: 'article'
         }, {
             name: '项目管理',
             key: '2',
             icon: 'pic-center',
-            path: 'mproject'
+            path: 'project'
         }, {
             name: '类型管理',
             key: '3',
@@ -70,7 +70,7 @@ export default class Layout extends Vue {
             name: '留言管理',
             key: '5',
             icon: 'message',
-            path: 'mcomment'
+            path: 'comment'
         }, {
             name: '其它',
             key: '6',
