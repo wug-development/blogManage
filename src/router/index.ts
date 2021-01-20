@@ -146,21 +146,25 @@ const getRouter = function(obj: any, name?: string) {
 }
 
 router.beforeEach((to, from, next) => {
-    // console.log(to)
-    // console.log(from)
-    if (to.meta && to.meta.hasParent && !to.meta.parentName) {
-        routeList.push({name: to.name, path: to.path})
-    } else {
-        if (to.meta && to.meta.hasParent) {
+    if (routeList.length > 0) {
+        var _i = routeList.findIndex((item: any) => item.path === to.path)
+        if (_i > -1) {
+            routeList.splice(_i + 1, routeList.length)
+        } else if (to.meta && to.meta.hasParent && !to.meta.parentName) {
             routeList.push({name: to.name, path: to.path})
-            // getRouter(to.matched[to.matched.length - 1])
         } else {
-            routeList = []
-            routeList.push({name: to.name, path: to.path})
+            if (to.meta && to.meta.hasParent) {
+                routeList.push({name: to.name, path: to.path})
+            } else {
+                routeList = []
+                routeList.push({name: to.name, path: to.path})
+            }
         }
+    } else {
+        routeList.push({name: to.name, path: to.path})
     }
+    
     to.meta.routeList = routeList
-    console.log(routeList)
     next()
 })
 
