@@ -233,7 +233,6 @@ export default class Index extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/assets/sass/base.scss';
 .index-box{
     height: 100%;
     overflow-x: hidden;

@@ -93,6 +93,9 @@ export default class Layout extends Vue {
     z-index: 1;
     width: 100%;
     box-shadow: 1px 0 0 0 #f0f0f0, 0 1px 0 0 #e1e1e1, 1px 1px 0 0 #f0f0f0;
+    .ant-dropdown-menu{
+        text-align: center;
+    }
     .header-right{
         display: flex;
         padding-right: 20px;

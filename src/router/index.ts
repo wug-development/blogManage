@@ -10,7 +10,7 @@ const routerMain: Array<RouteConfig> = [
         meta: {
             key: ''
         },
-        component: () => import(/* webpackChunkName: "index" */ '../views/Index.vue')
+        component: () => import(/* webpackChunkName: "main" */ '../views/Index.vue')
     },
     {
         path: '/article',
@@ -44,7 +44,7 @@ const routerMain: Array<RouteConfig> = [
         meta: {
             key: '2'
         },
-        component: () => import('../views/Project.vue'),
+        component: () => import(/* webpackChunkName: "project" */ '../views/Project.vue'),
         children: [
             {
                 path: '/',
@@ -52,7 +52,7 @@ const routerMain: Array<RouteConfig> = [
                 meta: {
                     key: '2'
                 },
-                component: () => import('../views/project/MProject.vue')
+                component: () => import(/* webpackChunkName: "projectlist" */ '../views/project/MProject.vue')
             },
             {
                 path: '/editproject',
@@ -62,7 +62,7 @@ const routerMain: Array<RouteConfig> = [
                     hasParent: true,
                     parentName: '项目管理'
                 },
-                component: () => import('../views/project/ProjectEdit.vue')
+                component: () => import(/* webpackChunkName: "editproject" */ '../views/project/ProjectEdit.vue')
             }
         ]
     },
@@ -72,7 +72,7 @@ const routerMain: Array<RouteConfig> = [
         meta: {
             key: '3'
         },
-        component: () => import('../views/MType.vue')
+        component: () => import(/* webpackChunkName: "mtype" */ '../views/MType.vue')
     },
     {
         path: '/mlabel',
@@ -80,14 +80,14 @@ const routerMain: Array<RouteConfig> = [
         meta: {
             key: '4'
         },
-        component: () => import('../views/MLabel.vue')
+        component: () => import(/* webpackChunkName: "mlabel" */ '../views/MLabel.vue')
     },
     {
         path: '/comment',
         meta: {
             key: '5'
         },
-        component: () => import('../views/Comment.vue'),
+        component: () => import(/* webpackChunkName: "comment" */ '../views/Comment.vue'),
         children: [
             {
                 path: '/',
@@ -96,7 +96,7 @@ const routerMain: Array<RouteConfig> = [
                     key: '5',
                     hasParent: true
                 },
-                component: () => import('../views/message/MComment.vue'),
+                component: () => import(/* webpackChunkName: "commentlist" */ '../views/message/MComment.vue'),
             },
             {
                 path: '/commentinfo',
@@ -106,7 +106,7 @@ const routerMain: Array<RouteConfig> = [
                     hasParent: true,
                     parentName: '管理留言'
                 },
-                component: () => import('../views/message/CommentInfo.vue')
+                component: () => import(/* webpackChunkName: "commentinfo" */ '../views/message/CommentInfo.vue')
             }
         ]
     },
@@ -121,7 +121,7 @@ const routes: Array<RouteConfig> = [
     {
         path: '/login',
         name: '登录',
-        component: () => import('../views/Login.vue')
+        component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue')
     }
 ]
 

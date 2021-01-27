@@ -66,7 +66,6 @@ export default class ProjectEdit extends Vue {
 </script>
 
 <style lang="scss">
-@import '@/assets/sass/base.scss';
 .projectedit-box{
     height: 100%;
     padding: 0;
