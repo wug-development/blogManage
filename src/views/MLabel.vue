@@ -1,5 +1,6 @@
 <template>
     <div class="mlabel-box">
+        <a-spin :spinning="loading">
         <div class="m-list-header">
             <div class="m-list-title">标签管理</div>
             <div class="m-list-search-body">
@@ -13,38 +14,50 @@
 
         <div class="m-list-body">
             <div class="m-list-table-wrapper" ref="">
+                <a-checkbox-group @change="checkValue">
                 <table class="m-list-table">
                     <thead>
                         <tr>
                             <td></td>
                             <td>标签名称</td>
-                            <td>添加时间</td>
+                            <td>类型名称</td>
                             <td>操作</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(item, i) in list" :key="i">
                             <td>
-                                <a-checkbox></a-checkbox>
+                                <a-checkbox :value="item.id"></a-checkbox>
                             </td>
-                            <td><a href="">TradeCode {{i}}</a></td>
-                            <td>2021-01-11 18:16:47</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.cname}}</td>
                             <td>
-                                <button class="btn btn-edit" @click="toEdit(i)">编辑</button>
-                                <button class="btn btn-del">删除</button>
+                                <button class="btn btn-edit" @click="toEdit(item.name, item.id, item.cid)">编辑</button>
+                                <a-popconfirm placement="left" @confirm="del(item.id)" ok-text="确定" cancel-text="取消">
+                                    <template slot="title">
+                                        <p>您确定要删除该标签吗？</p>
+                                    </template>
+                                    <button class="btn btn-del">删除</button>
+                                </a-popconfirm>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                </a-checkbox-group>
                 <div class="m-list-table-page">
-                    <a-pagination :default-current="6" :total="500" />
+                    <a-pagination :default-current="page" :pageSize="pageNum" :total="pageCount" @change="changePage" />
                 </div>
             </div>
         </div>
-
-        <my-modal v-model="isShow" :title="layerTitle" :loading="loading" @submit="save">
+        <my-modal v-model="isShow" :title="layerTitle" @submit="submit">
+            <a-select label-in-value placeholder="请选择类型" v-model="selOption" @change="checkValue">
+                <a-select-option v-for="(item, i) in list" :key="i" :value="item.id">
+                    {{item.name}}
+                </a-select-option>
+            </a-select>
             <a-input placeholder="请输入标签名称" v-model="labelName" />
         </my-modal>
+        </a-spin>
     </div>
 </template>
 
@@ -61,37 +74,124 @@ export default class MLabel extends Vue{
     @Provide() searching: boolean = false
     @Provide() list: any
     @Provide() height: any = 0
+    @Provide() page: number = 1
     @Provide() pageNum: number = 0
+    @Provide() pageCount: number = 50
     @Provide() isShow: boolean = false
     @Provide() loading: boolean = false
+    @Provide() filterName: string = ''
+    @Provide() searchName: string = ''
     @Provide() labelName: string = ''
+    @Provide() typeID: string = ''
     @Provide() layerTitle: string = ''
+    @Provide() selVal: any = ''
+    @Provide() selOption: any = ''
 
     search () {
-        this.searching = true
-        setTimeout(() => {
-            this.searching =false
-        }, 3000)
+        this.filterName = this.searchName
+        this.getList()
     }
-    toEdit (v: any) {
+
+    checkValue (v: any) {
         console.log(v)
+    }
+
+    changePage (v: any) {
+        this.page = v
+        this.getList()
+    }
+
+    getList () {
+        this.loading = true
+        this.$http.get(this.uris.getLabels, {params: {
+            page: this.page,
+            pagenum: this.pageNum,
+            filter: this.filterName
+        }}).then((res) => {
+            console.log(res.data)
+            this.loading = false
+            if (res.data.code === 200) {
+                const d = res.data.data
+                this.pageCount = d.count
+                this.list = d.rows
+                this.$forceUpdate()
+            } else {
+                this.$message.error("请求失败！")
+            }
+        }).catch(() => {
+            this.loading = false
+        })
+    }
+
+    toEdit (v: any, id: string) {
         if (v) {
+            this.typeID = id
             this.labelName = v
             this.layerTitle = '编辑标签'
         } else {
+            this.typeID = ''
+            this.labelName = ''
             this.layerTitle = '添加标签'
         }
         this.isShow = true
     }
-    save () {
 
+    submit () {
+        this.typeID? this.save() : this.add()
+    }
+
+    add () {
+        this.$http.get(this.uris.addType, {params: {
+            id: this.typeID,
+            name: this.labelName
+        }}).then((res) => {
+            console.log(res.data)
+            if (res.data.code === 200) {
+                this.isShow = false
+                this.$message.success("添加成功！")
+                this.page = 1
+                this.getList()
+            } else {
+                this.$message.error("请求失败！")
+            }
+        })
+    }
+
+    save () {
+        this.$http.get(this.uris.editType, {params: {
+            id: this.typeID,
+            name: this.labelName
+        }}).then((res) => {
+            console.log(res.data)
+            if (res.data.code === 200) {
+                this.isShow = false
+                this.$message.success("保存成功！")
+                this.getList()
+            } else {
+                this.$message.error("请求失败！")
+            }
+        })
+    }
+
+    del (id: string) {
+        this.$http.get(this.uris.delType, {params: {
+            id
+        }}).then((res) => {
+            console.log(res.data)
+            if (res.data.code === 200) {
+                this.$message.success("删除成功！")
+                this.getList()
+            } else {
+                this.$message.error("删除失败！")
+            }
+        })
     }
 
     created () {
         this.height = document.body.clientHeight
         this.height -= 400
         this.pageNum = Math.floor(this.height / 55)
-        this.list = new Array(this.pageNum)
+        this.list = this.getList()
     }
 }
 </script>
@@ -105,7 +205,7 @@ export default class MLabel extends Vue{
     position: relative;
     .m-list-body{
         td:nth-child(2){
-            width: 50%;
+            width: 60%;
         }
     }
 }

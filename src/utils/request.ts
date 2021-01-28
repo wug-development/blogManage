@@ -32,7 +32,6 @@ const service = axios.create({
 
 service.interceptors.request.use(config => {
     const token = localStorage.getItem('blogToken')
-    console.log('token: ' + token)
     // if (!config.neverCancel) {
     //     // 生成cancelToken
     //     config.cancelToken = new CancelToken((c: any) => {
@@ -41,11 +40,9 @@ service.interceptors.request.use(config => {
     // }
     if (token) {
         config.headers.common['token'] = token
-        console.log('token ok')
     }
     return config
 }, error => {
-    console.log('token error')
     return Promise.reject(error)
 })
 
@@ -56,7 +53,6 @@ service.interceptors.response.use(
         // 移除队列中的该请求，注意这时候没有传第二个参数f
         removePending(response.config);
         // 获取返回数据，并处理。按自己业务需求修改。下面只是个demo
-        console.log(response)
         if (response.status !== 200 || (response.data && response.data.code === 401)) {
             // return response
             if (response.status === 401 || (response.data && response.data.code === 401)) {

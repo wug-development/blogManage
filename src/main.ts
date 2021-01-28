@@ -17,7 +17,6 @@ Vue.config.productionTip = false
 Vue.use(VueAxios, service)
 
 Vue.use(AntDesign)
-Vue.prototype.$message = AntDesign.message
 
 Vue.use(MyMenu)
 
