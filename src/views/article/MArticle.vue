@@ -4,9 +4,9 @@
             <div class="m-list-title">文章管理</div>
             <div class="m-list-search-body">
                 <div class="m-list-search-box">
-                    <input type="text" class="txt" placeholder="请输入文章名称" maxlength="50">
+                    <input type="text" class="txt" v-model.trim="searchName" placeholder="请输入文章名称" maxlength="50">
                     <a-button type="primary" class="btn" :loading="searching" @click="search">搜索</a-button>
-                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit">新增</a-button>
+                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit('')">新增</a-button>
                 </div>
             </div>
         </div>
@@ -28,11 +28,11 @@
                             <td>
                                 <a-checkbox></a-checkbox>
                             </td>
-                            <td><a href="">TradeCode 99</a></td>
-                            <td>2021-01-11 18:16:47</td>
-                            <td>76</td>
+                            <td><a href="javascript:;">{{item.title}}</a></td>
+                            <td>{{item.addtime}}</td>
+                            <td>{{item.see}}</td>
                             <td>
-                                <button class="btn btn-edit">编辑</button>
+                                <button class="btn btn-edit" @click="toEdit(item.id)">编辑</button>
                                 <button class="btn btn-success btn-comment">评论</button>
                                 <button class="btn btn-fail btn-del">删除</button>
                             </td>
@@ -40,7 +40,7 @@
                     </tbody>
                 </table>
                 <div class="m-list-table-page">
-                    <a-pagination :default-current="6" :total="500" />
+                    <a-pagination :default-current="page" :pageSize="pageNum" :total="pageCount" @change="changePage" />
                 </div>
             </div>
         </div>
@@ -53,15 +53,22 @@ import {Vue, Component, Provide} from 'vue-property-decorator'
 @Component
 export default class MArticle extends Vue{
     @Provide() searching: boolean = false
-    @Provide() list: any
+    @Provide() list: any = []
     @Provide() height: any = 0
+    @Provide() page: number = 1
     @Provide() pageNum: number = 0
+    @Provide() pageCount: number = 50
+    @Provide() loading: boolean = false
+    @Provide() filterName: string = ''
+    @Provide() searchName: string = ''
 
     search () {
-        this.searching = true
-        setTimeout(() => {
-            this.searching =false
-        }, 3000)
+        this.filterName = this.searchName
+        this.getList()
+    }
+    changePage (v: any) {
+        this.page = v
+        this.getList()
     }
     toEdit (v: string) {
         this.$router.push({
@@ -69,11 +76,33 @@ export default class MArticle extends Vue{
         })
     }
 
+    getList () {        
+        this.loading = true
+        this.$http.get(this.uris.getArticles, {params: {
+            page: this.page,
+            pagenum: this.pageNum,
+            filter: this.filterName
+        }}).then((res) => {
+            console.log(res.data)
+            this.loading = false
+            if (res.data.code === 200) {
+                const d = res.data.data
+                this.pageCount = d.count
+                this.list = d.rows
+                this.$forceUpdate()
+            } else {
+                this.$message.error("请求失败！")
+            }
+        }).catch(() => {
+            this.loading = false
+        })
+    }
+
     created () {
         this.height = document.body.clientHeight
         this.height -= 400
         this.pageNum = Math.floor(this.height / 55)
-        this.list = new Array(this.pageNum)
+        this.getList()
     }
 }
 </script>

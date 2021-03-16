@@ -5,9 +5,9 @@
             <div class="m-list-title">标签管理</div>
             <div class="m-list-search-body">
                 <div class="m-list-search-box">
-                    <input type="text" class="txt" placeholder="请输入标签名称" maxlength="50">
-                    <a-button type="primary" class="btn" :loading="searching" @click="search">搜索</a-button>
-                    <a-button type="primary" icon="plus" class="btn-add" @click="toEdit('')">新增</a-button>
+                    <input label="text" class="txt" v-model.trim="searchName" placeholder="请输入标签名称" maxlength="50">
+                    <a-button label="primary" class="btn" :loading="searching" @click="search">搜索</a-button>
+                    <a-button label="primary" icon="plus" class="btn-add" @click="toEdit('')">新增</a-button>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                         <tr>
                             <td></td>
                             <td>标签名称</td>
-                            <td>类型名称</td>
+                            <td>所属类型</td>
                             <td>操作</td>
                         </tr>
                     </thead>
@@ -30,9 +30,9 @@
                                 <a-checkbox :value="item.id"></a-checkbox>
                             </td>
                             <td>{{item.name}}</td>
-                            <td>{{item.cname}}</td>
+                            <td>{{item.categorys.cname}}</td>
                             <td>
-                                <button class="btn btn-edit" @click="toEdit(item.name, item.id, item.cid)">编辑</button>
+                                <button class="btn btn-edit" @click="toEdit(item.name, item.id, item.cid, item.categorys.cname)">编辑</button>
                                 <a-popconfirm placement="left" @confirm="del(item.id)" ok-text="确定" cancel-text="取消">
                                     <template slot="title">
                                         <p>您确定要删除该标签吗？</p>
@@ -50,10 +50,8 @@
             </div>
         </div>
         <my-modal v-model="isShow" :title="layerTitle" @submit="submit">
-            <a-select label-in-value placeholder="请选择类型" v-model="selOption" @change="checkValue">
-                <a-select-option v-for="(item, i) in list" :key="i" :value="item.id">
-                    {{item.name}}
-                </a-select-option>
+            <a-select label-in-value :default-value="defaultSel" placeholder="请选择类型" v-model="selOption" @change="checkValue" v-if="types && types.length > 0">
+                <a-select-option v-for="(item, i) in types" :key="i" :value="item.id">{{item.name}}</a-select-option>
             </a-select>
             <a-input placeholder="请输入标签名称" v-model="labelName" />
         </my-modal>
@@ -72,7 +70,8 @@ import MyModal from '@/components/ModalLayer.vue'
 })
 export default class MLabel extends Vue{
     @Provide() searching: boolean = false
-    @Provide() list: any
+    @Provide() types: any = []
+    @Provide() list: any = []
     @Provide() height: any = 0
     @Provide() page: number = 1
     @Provide() pageNum: number = 0
@@ -82,8 +81,9 @@ export default class MLabel extends Vue{
     @Provide() filterName: string = ''
     @Provide() searchName: string = ''
     @Provide() labelName: string = ''
-    @Provide() typeID: string = ''
+    @Provide() labelID: string = ''
     @Provide() layerTitle: string = ''
+    @Provide() defaultSel: object = {}
     @Provide() selVal: any = ''
     @Provide() selOption: any = ''
 
@@ -101,6 +101,21 @@ export default class MLabel extends Vue{
         this.getList()
     }
 
+    getTypes () {
+        this.$http.get(this.uris.getType, {}).then((res) => {
+            console.log(res.data)
+            this.loading = false
+            if (res.data.code === 200) {
+                const d = res.data.data
+                this.types = d
+            } else {
+                this.$message.error("类型获取失败！")
+            }
+        }).catch(() => {
+            this.loading = false
+        })
+    }
+
     getList () {
         this.loading = true
         this.$http.get(this.uris.getLabels, {params: {
@@ -113,6 +128,7 @@ export default class MLabel extends Vue{
             if (res.data.code === 200) {
                 const d = res.data.data
                 this.pageCount = d.count
+                console.log(d.rows)
                 this.list = d.rows
                 this.$forceUpdate()
             } else {
@@ -123,27 +139,28 @@ export default class MLabel extends Vue{
         })
     }
 
-    toEdit (v: any, id: string) {
+    toEdit (v: any, id: string, cid: string, cname: string) {
+        this.isShow = true
         if (v) {
-            this.typeID = id
+            this.labelID = id
             this.labelName = v
             this.layerTitle = '编辑标签'
+            this.selOption = {key: cid, label: cname}
         } else {
-            this.typeID = ''
+            this.labelID = ''
             this.labelName = ''
             this.layerTitle = '添加标签'
         }
-        this.isShow = true
     }
 
     submit () {
-        this.typeID? this.save() : this.add()
+        this.labelID? this.save() : this.add()
     }
 
     add () {
-        this.$http.get(this.uris.addType, {params: {
-            id: this.typeID,
-            name: this.labelName
+        this.$http.get(this.uris.addLabel, {params: {
+            name: this.labelName,
+            cid: this.selOption.key
         }}).then((res) => {
             console.log(res.data)
             if (res.data.code === 200) {
@@ -158,9 +175,10 @@ export default class MLabel extends Vue{
     }
 
     save () {
-        this.$http.get(this.uris.editType, {params: {
-            id: this.typeID,
-            name: this.labelName
+        this.$http.get(this.uris.editLabel, {params: {
+            id: this.labelID,
+            name: this.labelName,
+            cid: this.selOption.id
         }}).then((res) => {
             console.log(res.data)
             if (res.data.code === 200) {
@@ -174,7 +192,7 @@ export default class MLabel extends Vue{
     }
 
     del (id: string) {
-        this.$http.get(this.uris.delType, {params: {
+        this.$http.get(this.uris.delLabel, {params: {
             id
         }}).then((res) => {
             console.log(res.data)
@@ -191,7 +209,8 @@ export default class MLabel extends Vue{
         this.height = document.body.clientHeight
         this.height -= 400
         this.pageNum = Math.floor(this.height / 55)
-        this.list = this.getList()
+        this.getList()
+        this.getTypes()
     }
 }
 </script>

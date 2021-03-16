@@ -6,10 +6,18 @@ const urls = {
     getType: '/type/list',
     getTypes: '/type/query',
     delType: '/type/del',
-    addLabel: '/label/add',
-    editLabel: '/label/edit',
-    getLabel: '/label/list',
-    getLabels: '/label/query',
-    delLabel: '/label/del'
+    addLabel: '/labels/add',
+    editLabel: '/labels/edit',
+    getLabel: '/labels/list',
+    getLabels: '/labels/query',
+    delLabel: '/labels/del',
+    addArticle: '/article/add',
+    editArticle: '/article/edit',
+    saveArticle: '/article/save',
+    getArticle: '/article/list',
+    getArticles: '/article/query',
+    getArticleInfo: '/article/detail',
+    delArticle: '/article/del',
+    uploadimg: '/upload/img',
 }
 export default urls

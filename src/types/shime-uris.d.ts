@@ -12,6 +12,14 @@ declare namespace URIS {
         editLabel: string,
         getLabel: string,
         getLabels: string,
-        delLabel: string
+        delLabel: string,
+        addArticle: string,
+        editArticle: string,
+        saveArticle: string,
+        getArticle: string,
+        getArticles: string,
+        getArticleInfo: string,
+        delArticle: string,
+        uploadimg: string,
     }
 }
