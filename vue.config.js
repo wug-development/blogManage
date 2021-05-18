@@ -8,7 +8,7 @@ const merge = require('webpack-merge')
 module.exports = merge({
     devServer: {
         open: false,
-        host: "192.168.11.52",
+        host: "192.168.11.44",
         port: 8088, //8080,
         https: false,
         hotOnly: false,

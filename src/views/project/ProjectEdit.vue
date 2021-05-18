@@ -48,9 +48,9 @@
 import { Vue, Component, Provide } from 'vue-property-decorator'
 @Component
 export default class ProjectEdit extends Vue {
-    @Provide() size: string = 'default'
-    @Provide() fileList: any = []
-    @Provide() saveing: boolean = false
+    private size: string = 'default'
+    private fileList: any = []
+    private saveing: boolean = false
 
     handleChange (v: string) {
       console.log(`Selected: ${v}`)

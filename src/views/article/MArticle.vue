@@ -52,15 +52,15 @@ import {Vue, Component, Provide} from 'vue-property-decorator'
 
 @Component
 export default class MArticle extends Vue{
-    @Provide() searching: boolean = false
-    @Provide() list: any = []
-    @Provide() height: any = 0
-    @Provide() page: number = 1
-    @Provide() pageNum: number = 0
-    @Provide() pageCount: number = 50
-    @Provide() loading: boolean = false
-    @Provide() filterName: string = ''
-    @Provide() searchName: string = ''
+    private searching: boolean = false
+    private list: any = []
+    private height: any = 0
+    private page: number = 1
+    private pageNum: number = 0
+    private pageCount: number = 50
+    private loading: boolean = false
+    private filterName: string = ''
+    private searchName: string = ''
 
     search () {
         this.filterName = this.searchName

@@ -35,7 +35,7 @@ import { Vue, Component, Provide } from 'vue-property-decorator'
 
 @Component
 export default class MProject extends Vue{
-    @Provide() list = new Array(10)
+    private list = new Array(10)
 
     toEdit (v: string) {
         this.$router.push({

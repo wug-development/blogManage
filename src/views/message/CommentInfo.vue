@@ -11,7 +11,7 @@ import { Vue, Component, Provide } from 'vue-property-decorator'
 
 @Component
 export default class CommentInfo extends Vue {
-    @Provide() name: string = ''
+    private name: string = ''
 }
 </script>
 

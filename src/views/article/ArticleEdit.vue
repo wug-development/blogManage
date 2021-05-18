@@ -61,19 +61,19 @@ import { Vue, Component, Provide, Ref } from 'vue-property-decorator'
 import E from 'wangeditor'
 @Component
 export default class ProjectEdit extends Vue {
-    @Provide() articleID: any = ''
-    @Provide() articleTitle: string = ''
-    @Provide() articleBrief: string = ''
-    @Provide() size: string = 'default'
-    @Provide() fileList: any = []
-    @Provide() saveing: boolean = false
-    @Provide() editor: any
-    @Provide() editorContent: string = ''
-    @Provide() labelList: any = []
-    @Provide() typeList: any = []
-    @Provide() selOption: any = []
-    @Provide() selLabel: any = []
-    @Provide() imgPath: any = []
+    private articleID: any = ''
+    private articleTitle: string = ''
+    private articleBrief: string = ''
+    private size: string = 'default'
+    private fileList: any = []
+    private saveing: boolean = false
+    private editor: any
+    private editorContent: string = ''
+    private labelList: any = []
+    private typeList: any = []
+    private selOption: any = []
+    private selLabel: any = []
+    private imgPath: any = []
 
     save () {
         let imgs = this.getImgsPath()

@@ -190,7 +190,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Provide, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import MyEchart from '../components/echarts/Echarts.vue'
 
 @Component({
@@ -199,8 +199,8 @@ import MyEchart from '../components/echarts/Echarts.vue'
     }
 })
 export default class Index extends Vue {
-    @Provide() hello: string = ''
-    @Provide() accountName: string = ''
+    private hello: string = ''
+    private accountName: string = ''
 
     getTime= function(): string {
         let d = new Date()

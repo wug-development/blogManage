@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import {Vue, Component, Provide} from 'vue-property-decorator'
+import {Vue, Component} from 'vue-property-decorator'
 import MyModal from '@/components/ModalLayer.vue'
 
 @Component({
@@ -69,23 +69,23 @@ import MyModal from '@/components/ModalLayer.vue'
     }
 })
 export default class MLabel extends Vue{
-    @Provide() searching: boolean = false
-    @Provide() types: any = []
-    @Provide() list: any = []
-    @Provide() height: any = 0
-    @Provide() page: number = 1
-    @Provide() pageNum: number = 0
-    @Provide() pageCount: number = 50
-    @Provide() isShow: boolean = false
-    @Provide() loading: boolean = false
-    @Provide() filterName: string = ''
-    @Provide() searchName: string = ''
-    @Provide() labelName: string = ''
-    @Provide() labelID: string = ''
-    @Provide() layerTitle: string = ''
-    @Provide() defaultSel: object = {}
-    @Provide() selVal: any = ''
-    @Provide() selOption: any = ''
+    private searching: boolean = false
+    private types: any = []
+    private list: any = []
+    private height: any = 0
+    private page: number = 1
+    private pageNum: number = 0
+    private pageCount: number = 50
+    private isShow: boolean = false
+    private loading: boolean = false
+    private filterName: string = ''
+    private searchName: string = ''
+    private labelName: string = ''
+    private labelID: string = ''
+    private layerTitle: string = ''
+    private defaultSel: object = {}
+    private selVal: any = ''
+    private selOption: any = ''
 
     search () {
         this.filterName = this.searchName

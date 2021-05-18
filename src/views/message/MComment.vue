@@ -51,14 +51,14 @@ import {Vue, Component, Provide} from 'vue-property-decorator'
 
 @Component
 export default class MComment extends Vue{
-    @Provide() searching: boolean = false
-    @Provide() list: any
-    @Provide() height: any = 0
-    @Provide() pageNum: number = 0
-    @Provide() isShow: boolean = false
-    @Provide() loading: boolean = false
-    @Provide() typeName: string = ''
-    @Provide() layerTitle: string = ''
+    private searching: boolean = false
+    private list: any
+    private height: any = 0
+    private pageNum: number = 0
+    private isShow: boolean = false
+    private loading: boolean = false
+    private typeName: string = ''
+    private layerTitle: string = ''
 
     search () {
         this.searching = true

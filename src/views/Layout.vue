@@ -20,7 +20,7 @@
 	</a-layout>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch, Provide } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import MyHeader from '../components/MyHeader.vue';
 
 @Component({
@@ -29,8 +29,8 @@ import MyHeader from '../components/MyHeader.vue';
 	}
 })
 export default class Layout extends Vue {
-	@Provide() menucoll: boolean = false
-	@Provide() routerList: Array<object> = []
+	private menucoll: boolean = false
+	private routerList: Array<object> = []
 
 	showMenu (v: boolean): void {
 		this.menucoll = v
